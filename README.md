@@ -1,5 +1,5 @@
 <picture>
-         <source media="(prefers-color-scheme: dark)" srcset="./dark.png">
+         <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/jaxcksn/jaxcksn/main/files/Lockup_Github_Dark.svg">
         <img alt="Texas Tech Computer Science - Whitacre College of Engineering" src="https://raw.githubusercontent.com/jaxcksn/jaxcksn/main/files/Lockup_Github.svg" width="200" align="right">
 </picture>
 
