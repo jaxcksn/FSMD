@@ -17,7 +17,7 @@
 
 <div align="center">
 
-![Version 1.0.0](https://flat.badgen.net/badge/pypi/1.0.0/cyan?icon=pypi) ![MIT License](https://flat.badgen.net/badge/license/GPLv3/blue) ![Python >3.7](https://flat.badgen.net/pypi/dd/FSMD/?label=downloads&color=purple) ![Last Commit](https://flat.badgen.net/github/last-commit/jaxcksn/FSMD)
+![Version 1.0.0](https://flat.badgen.net/pypi/v/FSMD/?color=cyan&icon=pypi) ![GPLv3 License](https://flat.badgen.net/badge/license/GPLv3/blue) ![Python >3.7](https://flat.badgen.net/pypi/dm/FSMD/?label=downloads&color=purple) ![Last Commit](https://flat.badgen.net/github/last-commit/jaxcksn/FSMD)
 
 ![Made by Jaxcksn](https://flat.badgen.net/badge/Made%20with%20%E2%99%A5%20by/Jaxcksn/red)
 
