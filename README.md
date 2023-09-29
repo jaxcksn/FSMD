@@ -59,18 +59,18 @@ To use FSMD, **Python 3.7 or greater** is required to be installed. You must als
 To install FSMD you can run:
 
 ```
-pip install FSDM
+pip install FSMD
 ```
 
 If you want to run the project directly, you can run the main.py file in the source folder, and Typer should take care of the rest.
 
 ### Install Graphviz
 
-The Graphviz library is required for FSDM to work properly, there are a few two ways (unless you are on Linux) to do this.
+The Graphviz library is required for FSMD to work properly, there are a few two ways (unless you are on Linux) to do this.
 
 ### Automatic Install (Windows & MacOS Only)
 
-FSDM includes an automatic installer for Graphviz. Each platform has different steps.
+FSMD includes an automatic installer for Graphviz. Each platform has different steps.
 
 The automatic installer is experimental and **not guaranteed** to work, it's recommended to [install Graphviz yourself](#manual-install-all-platforms) if the automatic installer does not work for you.
 
@@ -83,9 +83,9 @@ The automatic installer is experimental and **not guaranteed** to work, it's rec
 
 To install on Windows, run the following command:
 
-    FSDM install
+    FSMD install
 
-_Note:_ The windows installer does not add the Graphviz executables to your system path. It instead installs to a location in `%LOCALAPPDATA`, which is added to the PATH only when running FSDM. If you don't know what this means, don't worry about it.
+_Note:_ The windows installer does not add the Graphviz executables to your system path. It instead installs to a location in `%LOCALAPPDATA`, which is added to the PATH only when running FSMD. If you don't know what this means, don't worry about it.
 
 </details>
 
@@ -102,7 +102,7 @@ Automatic installation on MacOS **requires Homebrew** to be installed. You can i
 
 Once you meet all the requirements, run the following command:
 
-    FSDM install
+    FSMD install
 
 </details>
 
