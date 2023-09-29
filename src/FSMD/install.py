@@ -153,7 +153,7 @@ class Installer:
                 os.remove(oldFile)
             os.rename(installFile, oldFile)
 
-        self.log = open(installFile, "x")
+        self.log = open(installFile, "w")
         Print(f"SUCCESS: Created new log file - " + tStamp(), file=self.log)
 
     def FinishInstall(self, statusCode: int):
@@ -193,6 +193,7 @@ class MacOsInstaller(Installer):
     def TestForDot(self, isFinalCheck: bool = False) -> bool:
         TESTPATH = self.basePath + "/test"
 
+        Print(TESTPATH)
         spin = Status("Checking for Graphviz", spinner="dots")
         spin.start()
         Installer.makeDir(TESTPATH)
@@ -203,7 +204,7 @@ class MacOsInstaller(Installer):
             subprocess.run(
                 [
                     "dot",
-                    "-Tpng",
+                    "-Tpdf",
                     "-o",
                     TESTPATH + "/sample.pdf",
                     TESTPATH + "/sample.dot",
@@ -212,7 +213,7 @@ class MacOsInstaller(Installer):
                 stderr=self.log,
                 check=True,
             )
-            if os.path.isfile("./temp/sample.pdf"):
+            if os.path.isfile(TESTPATH + "/sample.pdf"):
                 spin.stop()
                 Installer.printResult(
                     Result.SUCCESS, "Graphviz is installed, and working."
