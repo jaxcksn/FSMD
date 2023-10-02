@@ -14,7 +14,20 @@ import os
 import yaml
 import tempfile
 
-from FSMD.install import Installer
+from schema import Schema, SchemaError, Regex, Use
+
+fsmSchema = Schema(
+    {
+        "filename": Use(str),
+        "states": [Regex(r"^[^;]+$")],
+        "startstate": Regex(r"^[^;]+$"),
+        "finalstates": [Regex(r"^[^;]+$")],
+        "transitions": [Regex(r"^[^;]+;[^;]+;[^;]+$")],
+    }
+)
+
+
+from install import Installer
 
 TEMPDIR = (
     "/tmp" if platform.system() == "Darwin" else os.path.normpath(tempfile.gettempdir())
@@ -34,7 +47,7 @@ app.add_typer(
 )
 
 EP = str.maketrans("E", "ε")
-SUB_TRANS = str.maketrans("0123456789", "₀₁₂₃₄₅₆₇₈₉")
+SUB_TRANS = str.maketrans("0123456789T", "₀₁₂₃₄₅₆₇₈₉ₜ")
 
 
 def dotSetup():
@@ -122,7 +135,12 @@ def createDiagram(data, outputDir, format):
 def createFSM(fsmFile: str, outputDir: str, format: str):
     with open(fsmFile, "r") as f:
         data = yaml.safe_load(f)
-        createDiagram(data, outputDir, format)
+        try:
+            fsmSchema.validate(data)
+            createDiagram(data, outputDir, format)
+        except SchemaError as sE:
+            Print("[bold red]ERROR[/] FSM File is Invalid.\n\n" + str(sE))
+            exit(1)
 
 
 @app.command()
