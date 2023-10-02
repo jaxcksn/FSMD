@@ -16,8 +16,10 @@
 > A python command line tool for creating finite state machine diagrams from a file. Make deterministic and non-deterministic automata easily!
 
 <div align="center">
-
-![Version 1.0.0](https://flat.badgen.net/pypi/v/FSMD/?color=cyan&icon=pypi) ![GPLv3 License](https://flat.badgen.net/badge/license/GPLv3/blue) ![Python >3.7](https://flat.badgen.net/pypi/dm/FSMD/?label=downloads&color=purple) ![Last Commit](https://flat.badgen.net/github/last-commit/jaxcksn/FSMD)
+<img src="https://flat.badgen.net/pypi/v/FSMD/?color=cyan&icon=pypi">
+<img src="https://flat.badgen.net/badge/license/GPLv3/blue">
+<img src="https://flat.badgen.net/github/issues/jaxcksn/FSMD?label=issues&color=purple">
+<img src="https://flat.badgen.net/github/last-commit/jaxcksn/FSMD">
 
 ![Made by Jaxcksn](https://flat.badgen.net/badge/Made%20with%20%E2%99%A5%20by/Jaxcksn/red)
 
