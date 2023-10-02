@@ -34,7 +34,7 @@ TEMPDIR = (
 )
 
 doEps = False
-
+states = []
 
 log = open(TEMPDIR + "/.createFSM_log", "w+")
 
@@ -86,16 +86,23 @@ def iS(g: graphviz.Digraph, startingState: str, acceptsEmpty: bool = False):
         shapeType = "circle"
 
     g.node(startingState, shape=shapeType)
+    states.append(startingState)
     g.edge("none", startingState)
 
 
 # Adds a state
 def s(g: graphviz.Digraph, name: str, accepted: bool = False):
     g.node(name, shape="doublecircle" if accepted else "circle")
+    states.append(name)
 
 
 # Adds an edge
 def e(g: graphviz.Digraph, start: str, end: str, label: str):
+    if not start in states or not end in states:
+        Print(
+            f"[red bold]ERROR[/] {start};{end};{label} contains states that are not listed in the states section of the FSM file."
+        )
+        raise Exception
     g.edge(start, end, label.translate(EP) if doEps else label)
 
 
@@ -121,11 +128,16 @@ def createDiagram(data, outputDir, format):
     )
     # Setup Nodes
     for state in data["states"]:
-        s(G, addSubscripts(str(state)), state in data["finalstates"])
+        if state != data["startstate"]:
+            s(G, addSubscripts(str(state)), state in data["finalstates"])
     # Setup Edges
     for edge in data["transitions"]:
         parts = edge.split(";")
-        e(G, addSubscripts(parts[0]), addSubscripts(parts[1]), parts[2])
+        try:
+            e(G, addSubscripts(parts[0]), addSubscripts(parts[1]), parts[2])
+        except:
+            spin.stop()
+            exit(1)
     G.filename = data["filename"]
     G.render(directory=outputDir).replace("\\", "/")
     spin.stop()
