@@ -27,7 +27,7 @@ fsmSchema = Schema(
 )
 
 
-from install import Installer
+from FSMD.install import Installer
 
 TEMPDIR = (
     "/tmp" if platform.system() == "Darwin" else os.path.normpath(tempfile.gettempdir())
