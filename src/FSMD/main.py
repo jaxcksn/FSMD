@@ -14,7 +14,7 @@ import os
 import yaml
 import tempfile
 
-from schema import Schema, SchemaError, Regex, Use
+from schema import Schema, SchemaError, Regex, Use, Optional
 
 fsmSchema = Schema(
     {
