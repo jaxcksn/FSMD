@@ -5,17 +5,17 @@ The FSM input file is a YAML file of the following format:
 ```YAML
 filename: OUTPUT_FILE_NAME
 states:
-    - STATE_NAME
-    - STATE_NAME
-    - STATE_NAME
+  - STATE_NAME
+  - STATE_NAME
+  - STATE_NAME
 startstate: STATE_NAME
 finalstates:
-    - STATE_NAME
-    - STATE_NAME
+  - STATE_NAME
+  - STATE_NAME
 transitions:
-    - FROM_STATE;TO_STATE;LABEL
-    - FROM_STATE;TO_STATE;LABEL
-    - FROM_STATE;TO_STATE;LABEL
+  - FROM_STATE;TO_STATE;LABEL
+  - FROM_STATE;TO_STATE;LABEL
+  - FROM_STATE;TO_STATE;LABEL
 ```
 
 ## Section Descriptions
@@ -49,5 +49,3 @@ where:
 - **START_STATE**: Is one of the states listed in the [states section](#states).
 - **FINAL_STATE**: Is one of the states listed in the [states section](#states). If this is the same as START_STATE, it will render as transition to itself.
 - **LABEL**: This is a string for the label of the transition. You can use most characters, except for a semicolon. If the `-E` CLI flag is set, the character "E" will automatically turn into "ε" to represent an epsilon transition.
-
-## General Tips and Tricks

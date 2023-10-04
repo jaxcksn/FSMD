@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="FSMD",
-    version="1.0.2",
+    version="1.1.0",
     author="Jaxcksn",
     author_email="admin@texansim.com",
     description="A CLI tool for creating an FSM diagram.",
@@ -34,6 +34,7 @@ setuptools.setup(
         "rich ==13.5.3",
         "typer ==0.9.0",
         "typing_extensions ==4.8.0",
+        "schema==0.7.5",
     ],
     package_dir={"": "src"},
     packages=setuptools.find_packages(where="src"),

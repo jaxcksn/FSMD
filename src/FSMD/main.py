@@ -14,14 +14,27 @@ import os
 import yaml
 import tempfile
 
-from FSMD.install import Installer
+from schema import Schema, SchemaError, Regex, Use, Optional
+
+fsmSchema = Schema(
+    {
+        "filename": Use(str),
+        "states": [Regex(r"^[^;]+$")],
+        "startstate": Regex(r"^[^;]+$"),
+        "finalstates": [Regex(r"^[^;]+$")],
+        "transitions": [Regex(r"^[^;]+;[^;]+;[^;]+$")],
+    }
+)
+
+
+from install import Installer
 
 TEMPDIR = (
     "/tmp" if platform.system() == "Darwin" else os.path.normpath(tempfile.gettempdir())
 )
 
 doEps = False
-
+states = []
 
 log = open(TEMPDIR + "/.createFSM_log", "w+")
 
@@ -34,7 +47,7 @@ app.add_typer(
 )
 
 EP = str.maketrans("E", "ε")
-SUB_TRANS = str.maketrans("0123456789", "₀₁₂₃₄₅₆₇₈₉")
+SUB_TRANS = str.maketrans("0123456789T", "₀₁₂₃₄₅₆₇₈₉ₜ")
 
 
 def dotSetup():
@@ -73,16 +86,23 @@ def iS(g: graphviz.Digraph, startingState: str, acceptsEmpty: bool = False):
         shapeType = "circle"
 
     g.node(startingState, shape=shapeType)
+    states.append(startingState)
     g.edge("none", startingState)
 
 
 # Adds a state
 def s(g: graphviz.Digraph, name: str, accepted: bool = False):
     g.node(name, shape="doublecircle" if accepted else "circle")
+    states.append(name)
 
 
 # Adds an edge
 def e(g: graphviz.Digraph, start: str, end: str, label: str):
+    if not start in states or not end in states:
+        Print(
+            f"[red bold]ERROR[/] {start};{end};{label} contains states that are not listed in the states section of the FSM file."
+        )
+        raise Exception
     g.edge(start, end, label.translate(EP) if doEps else label)
 
 
@@ -108,11 +128,16 @@ def createDiagram(data, outputDir, format):
     )
     # Setup Nodes
     for state in data["states"]:
-        s(G, addSubscripts(str(state)), state in data["finalstates"])
+        if state != data["startstate"]:
+            s(G, addSubscripts(str(state)), state in data["finalstates"])
     # Setup Edges
     for edge in data["transitions"]:
         parts = edge.split(";")
-        e(G, addSubscripts(parts[0]), addSubscripts(parts[1]), parts[2])
+        try:
+            e(G, addSubscripts(parts[0]), addSubscripts(parts[1]), parts[2])
+        except:
+            spin.stop()
+            exit(1)
     G.filename = data["filename"]
     G.render(directory=outputDir).replace("\\", "/")
     spin.stop()
@@ -122,7 +147,12 @@ def createDiagram(data, outputDir, format):
 def createFSM(fsmFile: str, outputDir: str, format: str):
     with open(fsmFile, "r") as f:
         data = yaml.safe_load(f)
-        createDiagram(data, outputDir, format)
+        try:
+            fsmSchema.validate(data)
+            createDiagram(data, outputDir, format)
+        except SchemaError as sE:
+            Print("[bold red]ERROR[/] FSM File is Invalid.\n\n" + str(sE))
+            exit(1)
 
 
 @app.command()
